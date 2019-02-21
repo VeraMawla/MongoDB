@@ -1,12 +1,12 @@
 remote_theme: ISSAE/architect
 
-name: nouveau nom
+name: MongoDB Tutorial
 
-author: Pascal Fares
+author: Vera Mawla
 
-author_email: pascal.fares@isae.edu.lb
+author_email: veramawla@gmail.com
 
-title: Un test de gihub page
+title: MongoDB Tutorial
 google_analytics: UA-29708002-2
 
 plugins:
