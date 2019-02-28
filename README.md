@@ -4,12 +4,12 @@ MongoDB est un système de gestion de base de données open source (SGBD) qui ut
 Une base de données MongoDB est différente d’une base de données relationnelle en ce sens que MongoDB utilise un modèle orienté document pour stocker les données. Dans le modèle orienté document, les données sont stockées dans les documents d'une collection. Dans le modèle relationnel, les données sont stockées dans des lignes d'une table.
 
 
-# Les « Collections » 
+# Les Collections
 Dans MongoDB, une Collection est un groupe de documents. Une Collection contient généralement des documents ayant un sujet similaire (utilisateurs, produits, publications, etc.).
 
 Les collections ressemblent donc, à bien des égards, aux tables du modèle relationnel.
 
-# Les « Documents »  
+# Les Documents
 Dans MongoDB, les documents sont stockés sous forme de documents JSON. JSON (JavaScript Object Notation) est une norme qui facilite l'échange de données. Les documents JSON sont similaires aux documents XML en ce sens que les données peuvent être présentées de manière hiérarchique et peuvent être lues par les humains et les ordinateurs.
 
 Voici un exemple de document JSON. Voici à quoi ressemblent les documents d’une base de données MongoDB.
