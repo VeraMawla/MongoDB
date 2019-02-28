@@ -33,34 +33,3 @@ Voici un exemple de document JSON. Voici à quoi ressemblent les documents d’u
 Le champ _id est l'identifiant unique d'un document. MongoDB permet de récupérer / référencer chaque document à l’aide de ce champ. Vous pouvez le fournir ou laisser MongoDB le générer.
 
 En utilisant JSON, les résultats de requête peuvent être facilement analysés, avec peu ou pas de transformation, directement par JavaScript et les langages de programmation les plus courants. Cela est dû au fait que les documents JSON utilisent les conventions nom / paire et tableau qui sont familières aux langages de programmation les plus courants tels que C, C ++, C #, Java, JavaScript, Perl, Python et bien d’autres.
-
-
-## h2
-
-* liste1
-* liste2
-  * sous lise
-  * sous liste2
-  
-  
-1. numer1
-1. number 2
-1. number 3
-   1.2 toto
-   1.3 titit
-   
-   
-```java
-public class X {
-   int m() {
-       return ;
-   }
-}
-```
-
-> un encadré
-> de plus
-
-[Cofares](http://www.cofares.net)
-
-
