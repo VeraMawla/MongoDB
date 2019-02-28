@@ -106,20 +106,29 @@ Il n’existe pas d’instruction CREATE DATABASE dans MongoDB comme dans SQL. P
 
 Pour changer de base de données, exécutez l'instruction use. Si la base de données n'existe pas déjà, elle sera créée:
   
-    use education
+```java
+use education
+```
 
 Cela entraîne le message suivant:
-     switched to db education
+
+```java
+switched to db education
+```
 
 Cependant, la base de données n'est réellement créée que lorsque vous y insérez des données:
 
-    db.university.insert ({universityname: "CNAM"})
+```java
+db.university.insert ({universityname: "CNAM"})
+```
 
 L'instruction ci-dessus crée une collection et y insère un document.
 
 Il va générer le message suivant:
 
-   WriteResult ({"nInserted": 1})
+```java
+WriteResult ({"nInserted": 1})
+```
 
 Vous pouvez voir la base de données dans votre liste de bases de données en lançant la commande suivante:
      
@@ -127,19 +136,25 @@ show databases
 
 Voici un exemple de la sortie:
 
+```java
 car 0.000GB
 education 0.000GB
 homework 0.003GB
+```
 
 Dans ce cas, trois bases de données sont affichées, dont l'une est notre base de données nouvellement créée (education).
 
 Vous pouvez également exécuter la ligne suivante pour afficher le contenu de votre base de données:
 
+```java
 db.education.find ()
+```
 
 Ce qui devrait produire une sortie comme ceci:
 
+```java
 {"_id": ObjectId ("5780fbf948ef8c6b3ffb0149"), "universityname": "CNAM"}
+```
 
 Comme vous pouvez le constater, notre paire nom / valeur est maintenant stockée dans la nouvelle base de données. MongoDB a également inséré un champ _id. Si vous ne fournissez pas de champ _id, MongoDB le fournit pour vous.
 
@@ -153,9 +168,9 @@ Lorsque nous avons créé notre base de données, nous avons créé une collecti
 ## Deux façons de créer une collection
 Voici deux manières de créer des collections:
 
-    Vous pouvez créer une collection à la volée lors de l'insertion d'un document (à l'aide de la méthode insert ().
+Vous pouvez créer une collection à la volée lors de l'insertion d'un document (à l'aide de la méthode insert ().
 
-    Vous pouvez également créer une collection de manière explicite à l'aide de la méthode createCollection().
+Vous pouvez également créer une collection de manière explicite à l'aide de la méthode createCollection().
     
 ### Avec insert()
 Lorsque vous utilisez la méthode insert () pour insérer un document, vous spécifiez la collection dans laquelle le document sera inséré. Si la collection n'existe pas déjà, elle sera créée.
@@ -164,7 +179,9 @@ C'est la méthode que nous avons utilisée précédemment lorsque nous avons cr�
 
 Voici le code que nous avons utilisé:
 
+```java
 db.university.insert ({universityname: "CNAM"})
+```
 
 Dans ce cas, la collection university n'existait pas auparavant, elle a donc été créée pour nous.
 
@@ -173,16 +190,19 @@ Vous pouvez également créer des collections à l'aide de la méthode createCol
 
 Voici un exemple d'utilisation de la méthode createCollection():
 
-         db.createCollection ("university")
+```java
+db.createCollection ("university")
+```
 
-Avec options
+## Avec options
 
 Vous pouvez également spécifier des options pour la collection à l'aide de la syntaxe db.createCollection(nom, options).
 
 Voici un exemple:
 
-         db.createCollection ("log", {limité: true, taille: 4500500, max: 4000})
-
+```java
+db.createCollection ("log", {limité: true, taille: 4500500, max: 4000})
+```
 # Créer un document
 MongoDB fournit la méthode insert () (et deux autres) permettant d’ajouter des documents à une base de données.
 
@@ -197,7 +217,9 @@ La méthode insert () insère un ou plusieurs documents dans une collection. Cha
 
 Voici la syntaxe pour insérer un seul document:
 
+```java
 db.collectionName.insert ({name: "value"})
+```
 
 Dans l'exemple ci-dessus, le document est composé de {name: "value"}. Ceci est un document JSON. Les documents JSON consistent en une ou plusieurs paires nom / valeur, entourées d'accolades {}.
 
@@ -207,24 +229,349 @@ Nous avons déjà utilisé cette méthode précédemment lorsque nous avons cré
 
 Ajoutons un autre document à notre base de données:
 
+```java
 db.university.insert ({universityname: "LIU"})
+```
 
-Ceci insère un document avec {artistname: "Jorn Lande"} comme contenu.
+Ceci insère un document avec {universityname: "LIU"} comme contenu.
 
 Maintenant, si nous recherchons la collection d'artistes, nous verrons deux documents (y compris celui que nous avons créé précédemment):
 
-> db.university.find ()
+```java
+db.university.find ()
 {"_id": ObjectId ("5780fbf948ef8c6b3ffb0149"), "universityname": "CNAM"}
 {"_id": ObjectId ("5781c9ac48ef8c6b3ffb014a"), " universityname ": "LIU"}
+```
 
 Notez que MongoDB a créé un champ _id pour les documents. Si vous n'en spécifiez pas, MongoDB en créera un pour vous. Cependant, vous pouvez fournir ce champ lors de l'insertion si vous préférez avoir le contrôle sur la valeur du champ _id.
 
+```java
 db.university.insert ({_id: 1, universityname: "AUB"})
+```
 
 Résultat:
 
-> db.university.find ()
+```java
+db.university.find ()
 {"_id": ObjectId ("5780fbf948ef8c6b3ffb0149"), " universityname ": "CNAM"}
 {"_id": ObjectId ("5781c9ac48ef8c6b3ffb014a"), " universityname ": "LIU"}
 {"_id": 1, " universityname ": "AUB"}
+```
+
+## Créer plusieurs documents
+
+Vous pouvez insérer plusieurs documents dans une même méthode insert ().
+
+Dans cet exemple, nous insérons trois documents:
+
+```java
+db.university.insert (
+   [
+     {universityname: "MIT"},
+     { universityname: "Oxford"},
+     { universityname: "Berklee"}
+   ]
+)
+```
+
+Notez que les documents sont fournis sous forme de tableau. Les documents sont placés entre crochets [] et sont séparés par des virgules.
+
+L'exécution du code ci-dessus entraîne le message suivant:
+
+```java
+BulkWriteResult ({
+"writeErrors": [],
+"writeConcernErrors": [],
+"nInserted": 3,
+"nUpserted": 0,
+"nMatched": 0,
+"nModified": 0,
+"nRemoved": 0,
+" upserted": []
+})
+```
+
+## La méthode insertOne ()
+
+Vous pouvez également utiliser la méthode insertOne() pour insérer un seul document dans une collection:
+
+```java
+db.university.insertOne ({_id: 1, universityname: "Oxford", country: "Britain"})
+```
+
+Ici, nous avons spécifié une collection inexistante. Comme avec la méthode insert (), la collection spécifiée sera créée si elle n'existe pas déjà.
+
+Vous remarquerez que le résultat est différent de lorsque vous utilisez la méthode insert ():
+
+```java
+{" acknowledged ": true, "insertedId": 1}
+```
+
+
+## La méthode insertMany ()
+
+Comme son nom l'indique, vous pouvez utiliser insertMany () pour insérer plusieurs documents:
+
+```java
+db.musicians.insertMany (
+   [
+     {_id: 2, nom: "Ian Paice", instrument: "Drums", né en 1948},
+     {_id: 3, nom: "Roger Glover", instrument: "Bass", né: 1945},
+     {_id: 4, nom: "Steve Morse", instrument: "Guitar", né en 1954},
+     {_id: 5, nom: "Don Airey", instrument: "Claviers", né en 1948},
+     {_id: 6, nom: "Jeff Martin", instrument: "Vocals", né en 1969},
+     {_id: 7, nom: "Jeff Burrows", instrument: "Drums", né en 1968},
+     {_id: 8, nom: "Stuart Chatwood", instrument: "Bass", né en 1969},
+   ]
+)
+```
+
+De nouveau, la sortie lors de l'utilisation de insertMany () est différente de celle obtenue si vous aviez inséré plusieurs documents à l'aide de la méthode insert ():
+
+```java
+{
+" acknowledged ": true,
+"InsertedIds": [
+2
+3
+4
+5
+6
+7,
+8
+]
+}
+```
+
+## Faire une ‘Query’ Requête
+
+MongoDB fournit la méthode db.collection.find () pour interroger les documents d'une collection.
+
+```java
+Db.collection.find () sélectionne les documents d'une collection et renvoie un curseur sur les documents sélectionnés.
+```
+
+### Renvoyer tous les documents
+
+Cet exemple renvoie tous les documents de la collection de musiciens:
+
+```java
+db.musicians.find ()
+```
+
+Résultat:
+
+```java
+{"_id": 1, "name": "Ian Gillan", "instrument": "Vocals"}
+{"_id": 2, "nom": "Ian Paice", "instrument": "Batterie", "né": 1948}
+{"_id": 3, "nom": "Roger Glover", "instrument": "basse", "né": 1945}
+{"_id": 4, "nom": "Steve Morse", "instrument": "Guitare", "né": 1954}
+{"_id": 5, "nom": "Don Airey", "instrument": "Claviers", "né": 1948}
+{"_id": 6, "name": "Jeff Martin", "instrument": "Vocals", "né": 1969}
+{"_id": 7, "nom": "Jeff Burrows", "instrument": "Batterie", "né": 1968}
+{"_id": 8, "nom": "Stuart Chatwood", "instrument": "Basse", "né": 1969}
+```
+
+Il renvoie tous les documents car nous n’avons passé aucun paramètre en tant que critère de filtrage.
+
+## Ajouter des critères de filtrage
+
+Vous pouvez filtrer les résultats en indiquant uniquement les critères qui vous intéressent.
+
+Par exemple, si nous ne sommes intéressés que par AIU de la collection university:
+
+```java
+db.university.find ({universityname: "AIU"})
+```
+
+Résultat:
+
+```java
+{"_id": ObjectId ("5781f85d48ef8c6b3ffb0150"), "universityname": "AIU", "departments": [{"department": "Law", "Branch": “B1”, "Section": "A"} , {"department": "Informatics", "Branch": “B4”, "Section": "C"}]}
+```
+
+## Formater les résultats
+
+Vous pourriez trouver les résultats ci-dessus un peu difficiles à lire. Le document est renvoyé sous la forme d'une longue ligne de texte.
+
+Vous pouvez utiliser la méthode pretty() pour formater les résultats afin qu'ils soient un peu plus faciles à lire.
+
+Ajoutez simplement pretty() à la fin, comme ceci:
+
+```java
+db.university.find ({universityname: "AIU"}).pretty()
+```
+
+Résultat:
+
+```
+{
+"_id": ObjectId ("5781f85d48ef8c6b3ffb0150"),
+"universityname": "AIU",
+"departments": [
+{
+"department": "Law",
+"Branch": “B1”,
+"Section": "A"
+},
+{
+"department": "Informatics",
+"Branch": “B4”,
+"Section": "C"
+}
+]
+}
+```
+
+## Plus d'options de filtrage
+
+Voici d'autres moyens de filtrer les résultats.
+
+Spécifiez ET Conditions
+
+Vous pouvez spécifier que seuls les documents contenant deux valeurs spécifiées ou plus doivent être renvoyés.
+
+Dans cet exemple, nous spécifions que seuls les musiciens qui jouent de la batterie et qui sont nés avant 1950 doivent être renvoyés. Seuls les documents correspondant aux deux critères seront renvoyés.
+
+```java
+db.musicians.find ({instrument: "Drums", né le {$lt: 1950}})
+```
+
+Résultat:
+
+```java
+{"_id": 2, "nom": "Ian Paice", "instrument": "Batterie", "né": 1948}
+```
+
+
+
+## Spécifiez les conditions OU
+
+Vous pouvez également spécifier que l'une ou l'autre valeur doit être vraie. Tant que l'une des conditions est vraie, le document sera renvoyé.
+
+Dans cet exemple, nous voulons des documents contenant des musiciens jouant de la batterie ou nés avant 1950.
+
+```java
+db.musicians.find (
+   {
+     $ ou: [{instrument: "Drums"}, {né: {$ lt: 1950}}]
+   }
+)
+```
+
+Résultat:
+
+```java
+{"_id": 2, "nom": "Ian Paice", "instrument": "Batterie", "né": 1948}
+{"_id": 3, "nom": "Roger Glover", "instrument": "basse", "né": 1945}
+{"_id": 5, "nom": "Don Airey", "instrument": "Claviers", "né": 1948}
+{"_id": 7, "nom": "Jeff Burrows", "instrument": "Batterie", "né": 1968}
+```
+
+## L'opérateur $in
+
+L'opérateur $in vous permet de fournir une liste de valeurs. Si un document contient l'une de ces valeurs, il sera renvoyé.
+
+À l'aide de l'exemple suivant, nous recherchons tous les musiciens qui chantent ou jouent de la guitare.
+
+```java
+db.musicians.find ({instrument: {$in: ["Vocals", "Guitar"]}})
+```
+
+Résultat :
+
+```java
+{"_id": 1, "name": "Ian Gillan", "instrument": "Vocals"}
+{"_id": 4, "nom": "Steve Morse", "instrument": "Guitare", "né": 1954}
+{"_id": 6, "name": "Jeff Martin", "instrument": "Vocals", "né": 1969}
+```
+
+## Interroger un tableau de documents
+Cet exemple interroge un tableau de documents. Il trouve des albums qui ont été publiés après l'an 2000.
+
+```java
+db.artists.find (
+   {
+      albums: {
+                $ elemMatch: {
+                     année: {$ gt: 2000}
+                }
+      }
+   }
+).pretty()
+```
+
+Résultat:
+
+```java
+{
+"_id": ObjectId ("578217c248ef8c6b3ffb015a"),
+"universityname": "LAU",
+"departments": [
+{
+"department": "Humanities",
+"Branch": "B3",
+"Section": "D"
+},
+{
+"department": "Genie Civil",
+"Branch": "B2",
+"Section": "A"
+}
+]
+}
+{
+"_id": ObjectId ("578217c248ef8c6b3ffb015b"),
+"universityname": "Sorbone",
+"departments": [
+{
+"department": "Nano Technology",
+"Branch": "B5",
+"Section": "B"
+},
+{
+"department": "Mathematics",
+"Branch": "B6",
+"Section": "G"
+}
+]
+}
+```
+
+Vous remarquerez que ces résultats contiennent également des albums antérieurs à 2000. C'est exact: c'est le fonctionnement des bases de données orientées document. Toute requête renvoie le document entier (mais uniquement les documents correspondant aux critères spécifiés).
+
+## La méthode db.collection.findOne ()
+Vous pouvez utiliser la méthode db.collection.findOne () pour renvoyer un document répondant aux critères de requête spécifiés.
+
+Si plusieurs documents répondent aux critères, seul le premier est renvoyé, comme déterminé par l'ordre naturel des documents sur le disque.
+
+Donc, en recherchant toute une collection comme celle-ci:
+
+```java
+db.musicians.findOne ()
+```
+
+## Renverra un seul document:
+
+```java
+{"_id": 1, "name": "Ian Gillan", "instrument": "Vocals"}
+```
+
+Si nous changeons le findOne () pour trouver () comme ceci:
+
+```java
+db.musicians.find ()
+```
+Nous voyons qu'il y a actuellement 8 documents dans la collection:
+
+```java
+{"_id": 1, "name": "Ian Gillan", "instrument": "Vocals"}
+{"_id": 2, "nom": "Ian Paice", "instrument": "Batterie", "né": 1948}
+{"_id": 3, "nom": "Roger Glover", "instrument": "basse", "né": 1945}
+{"_id": 4, "nom": "Steve Morse", "instrument": "Guitare", "né": 1954}
+{"_id": 5, "nom": "Don Airey", "instrument": "Claviers", "né": 1948}
+{"_id": 6, "name": "Jeff Martin", "instrument": "Vocals", "né": 1969}
+{"_id": 7, "nom": "Jeff Burrows", "instrument": "Batterie", "né": 1968}
+{"_id": 8, "nom": "Stuart Chatwood", "instrument": "Basse", "né": 1969}
+```
 
