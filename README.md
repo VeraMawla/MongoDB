@@ -337,7 +337,7 @@ De nouveau, la sortie lors de l'utilisation de insertMany () est différente de 
 4
 5
 6
-7,
+7
 8
 ]
 }
@@ -454,7 +454,7 @@ Dans cet exemple, nous voulons des documents contenant des musiciens jouant de l
 ```java
 db.musicians.find (
    {
-     $ ou: [{instrument: "Drums"}, {né: {$ lt: 1950}}]
+     $or : [{instrument: "Drums"}, {né: {$ lt: 1950}}]
    }
 )
 ```
